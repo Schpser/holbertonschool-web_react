@@ -81,63 +81,10 @@ userId = 42;        // ✅ OK aussi
 // Fonction avec union
 function printId(id: string | number) {
   if (typeof id === "string") {
-   ⚙️ 5. Configuration (TSConfig)
-
-Le fichier `tsconfig.json` définit la racine d'un projet et les options de compilation.
-
-### 📁 Gestion des fichiers
-
-```json
-{
-  "include": [
-    "src/**/*",      // 📂 Tous les fichiers dans src/
-   📊 Tableau de référence rapide
-  ],
-  "exclude": [
-    "node_modules",  // ❌ Exclure
-    "**/*.spec.ts"   // ❌ Exclure les tests
-  ]
-}
-```
-
-**Wildcards disponibles :**
-- `*` : Correspond à zéro ou plusieurs caractères
-- `**` : Correspond à n'importe quel répertoire imbriqué
-
-### 🔒 Options de vérification stricte
-
-```json
-{
-  "compilerOptions": {
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true
+    console.log(id.toUpperCase());
+  } else {
+    console.log(id.toFixed(2));
   }
-}
-```
-
-| Option | Description | Effet |
-|--------|-------------|--------|
-| `strict` | 🛡️ Active toutes les vérifications strictes | Mode sécurité maximale |
-| `noImplicitAny` | ⚠️ Erreur si `any` est inféré | Force la déclaration explicite |
-| `strictNullChecks` | 🚫 `null` et `undefined` comme types distincts | Évite les erreurs runtime |
-
-### 📝 Exemple de configuration complète
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
 }
 ```
 ### 🔧 Génériques
@@ -150,29 +97,7 @@ const numbers: Array<number> = [1, 2, 3];
 
 // Interface générique personnalisée
 interface Box<T> {
----
-
-## 💡 Analogie : Le DOM comme un grand magasin
-
-```
-🏬 DOM (Document Object Model)
-  │
-  ├─ 🚪 document = Accueil du magasin
-  │
-  ├─ 🔍 getElementById = Chercher un article par code-barres
-  │   └─ Retour: L'article OU "pas en stock" (null)
-  │
-  ├─ 🏷️ HTMLElement = Étiquette générale "article du magasin"
-  │
-  └─ 📋 HTMLAnchorElement = Fiche technique détaillée
-      └─ Indique exactement ce qu'on peut faire (ex: cliquer sur un lien)
-```
-
-**En résumé :**
-- 🔍 **Recherche** : `getElementById` = Scanner un code-barres
-- 🏷️ **Type générique** : `HTMLElement` = "C'est un produit"
-- 📋 **Type spécifique** : `HTMLAnchorElement` = "C'est un lien avec href, target, etc."
-- ❓ **null** : "Article introuvable en stock"
+  value: T;
 }
 
 const stringBox: Box<string> = { value: "hello" };
@@ -184,6 +109,7 @@ function getFirstElement<T>(arr: T[]): T | undefined {
 }
 
 const first = getFirstElement([1, 2, 3]);  // Type: number | undefined
+```
 
 ### 4. Manipulation du DOM avec TypeScript
 Le type **`HTMLElement`** est la colonne vertébrale de la manipulation du DOM en TypeScript.
@@ -223,4 +149,26 @@ Le fichier `tsconfig.json` définit la racine d'un projet et les options de comp
 | **`type A = B \| C`** | Union : définit qu'un type peut être l'un ou l'autre. | Type composé |
 | **`typeof variable`** | Prédicat de type pour vérifier le type d'une variable au runtime. | `string` (ex: "string", "number") |
 
-**Analogie pour comprendre le DOM dans TypeScript :** Imaginez que le DOM est un grand magasin. `document` est l'accueil du magasin. `getElementById` est comme demander un article spécifique par son code-barres ; on vous dit soit où il est, soit qu'il n'est pas en stock (`null`). Les interfaces comme `HTMLAnchorElement` sont les fiches techniques précises de chaque produit : elles vous disent exactement ce que vous pouvez faire avec (comme cliquer sur un lien), alors que le type `HTMLElement` est juste une étiquette générale disant que c'est "un article du magasin".
+---
+
+## 💡 Analogie : Le DOM comme un grand magasin
+
+```
+🏬 DOM (Document Object Model)
+  │
+  ├─ 🚪 document = Accueil du magasin
+  │
+  ├─ 🔍 getElementById = Chercher un article par code-barres
+  │   └─ Retour: L'article OU "pas en stock" (null)
+  │
+  ├─ 🏷️ HTMLElement = Étiquette générale "article du magasin"
+  │
+  └─ 📋 HTMLAnchorElement = Fiche technique détaillée
+      └─ Indique exactement ce qu'on peut faire (ex: cliquer sur un lien)
+```
+
+**En résumé :**
+- 🔍 **Recherche** : `getElementById` = Scanner un code-barres
+- 🏷️ **Type générique** : `HTMLElement` = "C'est un produit"
+- 📋 **Type spécifique** : `HTMLAnchorElement` = "C'est un lien avec href, target, etc."
+- ❓ **null** : "Article introuvable en stock"
