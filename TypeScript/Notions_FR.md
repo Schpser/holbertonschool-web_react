@@ -184,7 +184,6 @@ function getFirstElement<T>(arr: T[]): T | undefined {
 }
 
 const first = getFirstElement([1, 2, 3]);  // Type: number | undefined
-```
 
 ### 4. Manipulation du DOM avec TypeScript
 Le type **`HTMLElement`** est la colonne vertébrale de la manipulation du DOM en TypeScript.
